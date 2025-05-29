@@ -89,8 +89,8 @@ def user():
     return render_template('dash.html', name=user_name, numb=user_numb, passw=user_pas)
 
 # Exam route (Math)
-@app.route('/exm', methods=['GET', 'POST'])
-def exm():
+@app.route('/matrix', methods=['GET', 'POST'])
+def matrix():
     ref = db.reference('quiz/math-1st/chapter-1')
     data = ref.get()
 
@@ -133,11 +133,11 @@ def exm():
         data = question_ref.get()
         op[j + 1] = data['options']
 
-    return render_template("exm.html", op=op, question=main_qu)
+    return render_template("matrix.html", op=op, question=main_qu)
 
 # Exam route (Physics)
-@app.route('/phy', methods=['GET', 'POST'])
-def phy():
+@app.route('/vector', methods=['GET', 'POST'])
+def vector():
     ref = db.reference('quiz/physics-1st/chapter-2')
     data = ref.get()
 
@@ -176,11 +176,42 @@ def phy():
     op = {}
     for j in range(20):
         q_index = main_idx[j]
-        question_ref = db.reference(f'quiz/math-1st/chapter-1/{q_index}')
+        question_ref = db.reference(f'quiz/physics-1st/chapter-2/{q_index}')
         data = question_ref.get()
         op[j + 1] = data['options']
 
-    return render_template("phy.html", op=op, question=main_qu)
+    return render_template("vector.html", op=op, question=main_qu)
+
+
+
+
+
+
+
+
+@app.route('/lead')
+def leaderboard():
+    ref = db.reference('mcq app/users')
+    data = ref.get()
+
+    if data:
+        players = list(data.values())
+        sorted_players = sorted(players, key=lambda x: x["point"], reverse=True)
+        top_5 = sorted_players[:5]
+    else:
+        top_5 = []
+
+    return render_template('leader.html', players=top_5)
+
+
+
+
+
+
+
+
+
+
 
 # Submit route
 @app.route('/submit', methods=['POST'])
