@@ -85,8 +85,19 @@ def user():
 
     if not user_name:
         return redirect('/log')  # Session নাই, redirect back
+    
+    ref = db.reference('mcq app/users')
+    data = ref.get()
 
-    return render_template('dash.html', name=user_name, numb=user_numb, passw=user_pas)
+    if data:
+        players = list(data.values())
+        sorted_players = sorted(players, key=lambda x: x["point"], reverse=True)
+        top_5 = sorted_players[:1]
+    else:
+        top_5 = []
+
+
+    return render_template('dash.html', name=user_name.upper(), numb=user_numb, passw=user_pas,x=top_5)
 
 # Exam route (Math)
 @app.route('/matrix', methods=['GET', 'POST'])
@@ -181,6 +192,112 @@ def vector():
         op[j + 1] = data['options']
 
     return render_template("vector.html", op=op, question=main_qu)
+
+
+
+
+
+#ICT
+
+@app.route('/cprog', methods=['GET', 'POST'])
+def cprog():
+    ref = db.reference('quiz/ict/chapter-5')
+    data = ref.get()
+
+    all_qu = []
+    all_c = []
+    all_index = []
+
+    i = 1
+    while i < len(data):
+        ref_2 = db.reference(f'quiz/ict/chapter-5/{i}')
+        d = ref_2.get()
+        question = d['question']
+        correct = d['correct']
+        all_qu.append(question)
+        all_c.append(correct)
+        all_index.append(i)
+        i += 1
+
+    main_qu = []
+    main_c = []
+    main_idx = []
+
+    while True:
+        ran = random.randrange(0, len(all_qu))
+        main_qu.append(all_qu[ran])
+        main_c.append(all_c[ran])
+        main_idx.append(all_index[ran])
+        all_qu.pop(ran)
+        all_c.pop(ran)
+        all_index.pop(ran)
+        if len(main_qu) == 20:
+            break
+
+    session['correct_answers'] = main_c
+
+    op = {}
+    for j in range(20):
+        q_index = main_idx[j]
+        question_ref = db.reference(f'quiz/ict/chapter-5/{q_index}')
+        data = question_ref.get()
+        op[j + 1] = data['options']
+
+    return render_template("cprog.html", op=op, question=main_qu)
+
+
+
+
+
+
+
+@app.route('/medi', methods=['GET', 'POST'])
+def medi():
+    ref = db.reference('quiz/biochem/medical')
+    data = ref.get()
+
+    all_qu = []
+    all_c = []
+    all_index = []
+
+    i = 1
+    while i < len(data):
+        ref_2 = db.reference(f'quiz/biochem/medical/{i}')
+        d = ref_2.get()
+        question = d['question']
+        correct = d['correct']
+        all_qu.append(question)
+        all_c.append(correct)
+        all_index.append(i)
+        i += 1
+
+    main_qu = []
+    main_c = []
+    main_idx = []
+
+    while True:
+        ran = random.randrange(0, len(all_qu))
+        main_qu.append(all_qu[ran])
+        main_c.append(all_c[ran])
+        main_idx.append(all_index[ran])
+        all_qu.pop(ran)
+        all_c.pop(ran)
+        all_index.pop(ran)
+        if len(main_qu) == 20:
+            break
+
+    session['correct_answers'] = main_c
+
+    op = {}
+    for j in range(20):
+        q_index = main_idx[j]
+        question_ref = db.reference(f'quiz/biochem/medical/{q_index}')
+        data = question_ref.get()
+        op[j + 1] = data['options']
+
+    return render_template("medi.html", op=op, question=main_qu)
+
+
 
 
 
