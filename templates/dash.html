@@ -9,6 +9,11 @@
   <!-- Font Awesome CDN -->
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
   <style>
+
+body{
+  background-color:black;
+}
+
 .marquee-text {
   display: inline-block;
   white-space: nowrap;
@@ -27,7 +32,7 @@
 <body>
 
 <!-- Navbar (Do not change) -->
-<nav class="navbar navbar-expand-sm bg-dark">
+<nav class="navbar navbar-expand-sm bg-light">
   <div class="container-fluid">
     <ul class="navbar-nav" style="padding: 10px;">
       <li class="nav-item">
@@ -36,16 +41,16 @@
     </ul>
     <ul class="navbar-nav ms-auto" style="padding: 10px;">
       <li class="nav-item">
-        <a class="nav-link" href="#"><i class="fa-solid fa-circle-user fa-lg" style="color: #74C0FC;font-size:35px"></i></a>
+        <a class="nav-link" href="#"><i class="fa-solid fa-circle-user fa-lg" style="color: black;font-size:35px"></i></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link text-light" style="font-size:20px">{{ name }}</a>
+        <a class="nav-link text-dark" style="font-size:20px">{{ name }}</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link text-light" style="font-size:20px">ID-{{ numb }}</a>
+        <a class="nav-link text-dark" style="font-size:20px">ID-{{ numb }}</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link text-light" style="font-size:20px">POINTS-{{ passw }}</a>
+        <a class="nav-link text-dark" style="font-size:20px">POINTS-{{ passw }}</a>
       </li>
     </ul>
   </div>
@@ -53,7 +58,7 @@
 
 <br>
 <div class="container">
-  <a href="log">Log out</a>
+  <a href="log" style="font-size:20px;text-decoration:none;color:gold">Log out</a>
 </div>
 
 
@@ -66,7 +71,9 @@
 <br>
 <div class="overflow-hidden bg-success text-white">
   <div class="marquee-text py-2">
-    Welcome to M.C.Q MasTeR — Enjoy your learning! 🚀 Keep practicing and grow! 🔥🔥🔥
+    {% for y in x%}
+    OUR MCQ Master Name is {{y.name | upper}}
+    {%endfor%}
   </div>
 </div>
 
@@ -95,21 +102,21 @@
     </div>
 
     <div class="col-12 col-md-4">
-      <a href="#" class="text-decoration-none">
+      <a href="cprog" class="text-decoration-none">
         <div class="card text-white h-100" style="background-color: #6BCB77;">
           <div class="card-body">
-            <h5 class="card-title">upcoming....</h5>
-            <p class="card-text">upcoming....</p>
+            <h5 class="card-title">Ict(class-12)</h5>
+            <h2 class="card-text">C programming</h2>
           </div>
         </div>
       </a>
     </div>
 
-    <div class="col-12 col-md-4">
+       <div class="col-12 col-md-4">
       <a href="" class="text-decoration-none">
-        <div class="card text-white h-100" style="background-color: #FFD93D;">
+        <div class="card text-white h-100" style="background-color: #845EC2;">
           <div class="card-body">
-            <h5 class="card-title">upcoming....</h5>
+            <h5 class="card-title">upcoming........</h5>
             <p class="card-text">upcoming....</p>
           </div>
         </div>
